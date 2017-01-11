@@ -7,3 +7,51 @@ I am learning code and am trying to make the best website ever! </p>
 <p>
 I can't think of anything else to write so, ya. 
 </p>
+  tPaddle.followMouse = function(){
+   //follows mouse for player control
+   this.setImgAngle(90);
+   this.setPosition(this.x, scene.getMouseY());
+  } // end followMouse method
+  tPaddle.autoMove = function(){
+   //automatically moves
+   this.setImgAngle(90);
+   //don't move on every turn
+   if (Math.random() < BRAINS){
+    if (this.y > ball.y){
+     this.setMoveAngle(0);
+    } else {
+     this.setMoveAngle(180);
+    } // end if
+    this.setSpeed(V_SPEED);
+   } // end if
+  } // end autoMove  tBall.checkBounds = function(){
+   //overwrite checkbounds function to give
+   //custom behavior
+   //bounce off of top and bottom
+   if (this.y < 0){
+    this.setDY(this.dy * -1);
+   }
+   if (this.y > scene.height){
+    this.setDY(this.dy * -1);
+   }
+   //wrap off of sides
+   if(this.x < 0){
+    this.setPosition(scene.width - 150, this.y);
+    //computer scores
+   } // end if
+   if (this.x > scene.width){
+    this.setPosition(150, this.y);
+    //player scores
+   } // end if
+  } // end checkBounds tBall.checkBounce = function(paddle){
+   //responds to a collision with the given paddle
+   //Max and min dy
+   MAX = 10
+   if (this.collidesWith(paddle)){
+    this.setDX(this.dx * -1);  
+    dy = this.y - paddle.y;
+    dy = ((dy / paddle.height) * 2);
+    dy *= MAX;
+    this.setDY(dy);
+   } // end if
+  } // end checkBounce
